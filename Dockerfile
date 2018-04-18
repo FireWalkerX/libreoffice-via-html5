@@ -4,15 +4,18 @@
 
 FROM fedora:26
 
-MAINTAINER Rich Lucente <rlucente@redhat.com>
+#MAINTAINER Rich Lucente <rlucente@redhat.com>
+MAINTAINER Christian Martin <GitHub/ct-martin>
 
-LABEL vendor="Red Hat"
-LABEL version="0.2"
-LABEL description="JBoss Developer Studio IDE"
+#LABEL vendor="Red Hat"
+#LABEL version="0.2"
+LABEL version="0.1"
+#LABEL description="JBoss Developer Studio IDE"
+LABEL description="LibreOffice via Guacamole"
 
 ENV HOME /home/jbdsuser
 
-# Add the needed packages for JBDS
+# Add the needed packages for LibreOffice
 RUN    dnf -y update \
     && dnf -y install \
            gettext \
@@ -52,22 +55,23 @@ ADD resources/InstallConfigRecord.xml /usr/share/devstudio/
 #
 # Finally, the last command installs the JBoss integration tooling.
 #
-RUN    mkdir -p /tmp/resources \
-    && cd /tmp/resources \
-    && curl -L -o $JBDS_JAR $INSTALLER_URL \
-    && java -jar $JBDS_JAR /usr/share/devstudio/InstallConfigRecord.xml \
-    && cd /usr/share/devstudio \
-    && for ext in so chk; do \
-         for jbdslib in `find . -name "*.$ext"`; do \
-           jbdslib_basename=`basename $jbdslib`; \
-           for syslibdir in /lib64 /usr/lib64; do \
-             for dummy in `find $syslibdir -name $jbdslib_basename`; do \
-               [ -f $jbdslib ] && rm -f $jbdslib; \
-             done; \
-           done; \
-         done; \
-       done \
-    && rm -fr /tmp/resources
+#RUN    mkdir -p /tmp/resources \
+#    && cd /tmp/resources \
+#    && curl -L -o $JBDS_JAR $INSTALLER_URL \
+#    && java -jar $JBDS_JAR /usr/share/devstudio/InstallConfigRecord.xml \
+#    && cd /usr/share/devstudio \
+#    && for ext in so chk; do \
+#         for jbdslib in `find . -name "*.$ext"`; do \
+#           jbdslib_basename=`basename $jbdslib`; \
+#           for syslibdir in /lib64 /usr/lib64; do \
+#             for dummy in `find $syslibdir -name $jbdslib_basename`; do \
+#               [ -f $jbdslib ] && rm -f $jbdslib; \
+#             done; \
+#           done; \
+#         done; \
+#       done \
+#    && rm -fr /tmp/resources
+RUN dnf -y install libreoffice
 
 # This script starts and cleanly shuts down JBDS and the Xvnc server
 ADD resources/start.sh /usr/local/bin/
