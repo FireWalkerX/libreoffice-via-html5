@@ -1,3 +1,5 @@
+_Forked to provide LibreOffice instead of JBDS_
+
 # Holy Guacamole!!
 ## Introduction
 [Apache Guacamole](https://guacamole.incubator.apache.org/) is an
