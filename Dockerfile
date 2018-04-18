@@ -33,13 +33,14 @@ RUN    dnf -y update \
 
 # Create installation directory and set the openbox window manager
 # configuration for all users
-RUN    mkdir -p /usr/share/devstudio \
-    && echo 'export DISPLAY=:1' >> /etc/xdg/openbox/environment \
-    && echo "/usr/share/devstudio/devstudio -nosplash -data ${HOME}/workspace &" \
-             >> /etc/xdg/openbox/autostart
+#RUN    mkdir -p /usr/share/devstudio \
+#    && echo "/usr/share/devstudio/devstudio -nosplash -data ${HOME}/workspace &" \
+#             >> /etc/xdg/openbox/autostart
+RUN    echo 'export DISPLAY=:1' >> /etc/xdg/openbox/environment \
+    && echo "libreoffice &" >> /etc/xdg/openbox/autostart
 
 # Add the installation configuration file
-ADD resources/InstallConfigRecord.xml /usr/share/devstudio/
+#ADD resources/InstallConfigRecord.xml /usr/share/devstudio/
 
 # Install JBoss Developer Studio.  The needed files will be downloaded
 # from the provided URL. The reason for this is to not include the
