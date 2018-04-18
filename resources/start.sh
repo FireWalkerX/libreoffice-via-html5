@@ -1,11 +1,11 @@
 #!/bin/sh
 set -e
 
-# This script starts the JBDS application.  A single argument can
+# This script starts the LibreOffice application.  A single argument can
 # be passed to set the desired screen size.  The argument must be in
 # the form HORZxVERT where HORZ is a number >= 640 and VERT is a
 # number >= 480.  Also, this script will enable any user to run
-# JBDS if it is shutdown cleanly.
+# LibreOffice if it is shutdown cleanly.
 
 # default screen size
 SCREEN_SIZE="1440x730"
@@ -67,16 +67,16 @@ fi
 
 echo "Screen resolution set to $SCREEN_SIZE"
 
-echo "Launching  Xvnc which launches openbox and JBDS ..."
+echo "Launching  Xvnc which launches openbox and LibreOffice ..."
 cd ..
 vncserver :1 -name 'Desktop Name' -geometry $SCREEN_SIZE -depth 24
 
-echo "Making JBDS fullscreen ..."
-dummy=$(wait_for_window ' - Red Hat JBoss Developer Studio' && :)
-jbdswin=`DISPLAY=:1 wmctrl -l | \
-    grep ' - Red Hat JBoss Developer Studio' | \
+echo "Making LibreOffice fullscreen ..."
+dummy=$(wait_for_window ' - LibreOffice' && :)
+lowin=`DISPLAY=:1 wmctrl -l | \
+    grep ' - LibreOffice' | \
     cut -d' ' -f1`
-DISPLAY=:1 wmctrl -i -r $jbdswin -b add,fullscreen
+DISPLAY=:1 wmctrl -i -r $lowin -b add,fullscreen
 
 echo "Loop to prevent container from exiting"
 echo "CTRL-C to exit or run 'docker stop <container>'"
